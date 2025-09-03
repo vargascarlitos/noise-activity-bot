@@ -2,8 +2,7 @@ name: Noise Bot
 
 on:
   schedule:
-    # Corre cada 30 minutos (UTC).
-    - cron: "*/30 * * * *"
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -19,10 +18,10 @@ jobs:
   run-noise:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout con tu token (PAT)
         uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          token: ${{ secrets.ACTIONS_PAT }}
           fetch-depth: 0
 
       - name: Setup Node
@@ -30,9 +29,11 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Ejecutar bot de ruido
+      - name: Ejecutar bot de ruido con tu identidad
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT }}
+          GIT_USER_NAME: "vargascarlitos"
+          GIT_USER_EMAIL: "carlos.vr56@gmail.com"
         run: |
           node -v
           node scripts/noise.js

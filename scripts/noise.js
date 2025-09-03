@@ -55,8 +55,10 @@ async function call(method, url, body) {
   const defaultBranch = detectDefaultBranch();
 
   // Config git para el commit
-  run(`git config user.email "github-actions[bot]@users.noreply.github.com"`);
-  run(`git config user.name "github-actions[bot]"`);
+  const GIT_USER_NAME = process.env.GIT_USER_NAME || "github-actions[bot]";
+  const GIT_USER_EMAIL = process.env.GIT_USER_EMAIL || "github-actions[bot]@users.noreply.github.com";
+  run(`git config user.name "${GIT_USER_NAME}"`);
+  run(`git config user.email "${GIT_USER_EMAIL}"`);
   run(`git checkout ${defaultBranch}`);
 
   // 1) Tocar activity.log y commitear a la rama por defecto
