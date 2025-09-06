@@ -114,11 +114,33 @@ async function call(method, url, body) {
         }
     }
 
-    // 5.b) Dejar un "code review" automático (COMMENT o APPROVE)
-    await call('POST', `/repos/${OWNER}/${REPO}/pulls/${pr.number}/reviews`, {
-        body: `Auto-review: ${APPROVE_PR ? 'LGTM ✅' : 'Comentario 👀'}\n\nTimestamp: ${nowISO}`,
-        event: APPROVE_PR ? 'APPROVE' : 'COMMENT'
-    });
+    // 5.b) Dejar "code review" (COMMENT o APPROVE con fallback)
+    async function leaveReview(prNumber) {
+        const wantApprove = process.env.APPROVE_PR === '1';
+        const body = `Auto-review: ${wantApprove ? 'LGTM ✅' : 'Comentario 👀'}\n\nTimestamp: ${nowISO}`;
+
+        try {
+            await call('POST', `/repos/${OWNER}/${REPO}/pulls/${prNumber}/reviews`, {
+                body,
+                event: wantApprove ? 'APPROVE' : 'COMMENT'
+            });
+        } catch (e) {
+            const msg = String(e.message || '');
+            // Fallback si no se puede aprobar tu propio PR
+            if (wantApprove && msg.includes('Can not approve your own pull request')) {
+                console.log('No se puede aprobar el propio PR. Enviando comentario en su lugar…');
+                await call('POST', `/repos/${OWNER}/${REPO}/pulls/${prNumber}/reviews`, {
+                    body: `Auto-review (fallback a comentario): 👀\n\nTimestamp: ${nowISO}`,
+                    event: 'COMMENT'
+                });
+            } else {
+                // Cualquier otro error lo dejamos visible pero no rompemos el flujo
+                console.log('No pude dejar el review (continuo):', msg);
+            }
+        }
+    }
+
+    await leaveReview(pr.number);
 
     // 6) Merge del PR
     await call('PUT', `/repos/${OWNER}/${REPO}/pulls/${pr.number}/merge`, {
