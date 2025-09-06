@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 // scripts/noise.js
-// Bot de "ruido" mínimo: commit + issue (open/close) + branch + PR + merge
+// Flujo: commit ruido -> issue (open/close) -> branch -> PR -> review -> merge -> delete branch
 
 const { execSync } = require('child_process');
 const fs = require('fs');
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_FULL = process.env.GITHUB_REPOSITORY; // owner/repo (lo inyecta Actions)
-
 if (!GITHUB_TOKEN || !REPO_FULL) {
     console.error('Faltan variables: GITHUB_TOKEN o GITHUB_REPOSITORY.');
     process.exit(1);
@@ -18,20 +17,24 @@ const API = 'https://api.github.com';
 const nowISO = new Date().toISOString();
 const randomChar = String.fromCharCode(97 + Math.floor(Math.random() * 26));
 
+const GIT_USER_NAME = process.env.GIT_USER_NAME || 'github-actions[bot]';
+const GIT_USER_EMAIL = process.env.GIT_USER_EMAIL || 'github-actions[bot]@users.noreply.github.com';
+const REQUEST_REVIEWERS = (process.env.REQUEST_REVIEWERS || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+const APPROVE_PR = process.env.APPROVE_PR === '1';
+
 const run = (cmd) => execSync(cmd, { stdio: 'inherit' });
 
 function detectDefaultBranch() {
-    // 1) Si viene por env, usarla
     if (process.env.DEFAULT_BRANCH) return process.env.DEFAULT_BRANCH;
-    // 2) Intentar detectar con git origin/HEAD
     try {
-        const out = execSync('git symbolic-ref --short refs/remotes/origin/HEAD')
-            .toString()
-            .trim(); // ej: origin/main
-        return out.replace(/^origin\//, '');
-    } catch {
-        return 'main';
-    }
+        const out = execSync('git remote show origin').toString();
+        const m = out.match(/HEAD branch:\s+(.+)/);
+        if (m) return m[1].trim();
+    } catch { }
+    return 'main';
 }
 
 async function call(method, url, body) {
@@ -54,57 +57,45 @@ async function call(method, url, body) {
 (async () => {
     const defaultBranch = detectDefaultBranch();
 
-    // Config git para el commit
-    const GIT_USER_NAME = process.env.GIT_USER_NAME || "github-actions[bot]";
-    const GIT_USER_EMAIL = process.env.GIT_USER_EMAIL || "github-actions[bot]@users.noreply.github.com";
+    // Config git (autor/committer saldrá con tu usuario si usas PAT + email verificado/noreply)
     run(`git config user.name "${GIT_USER_NAME}"`);
     run(`git config user.email "${GIT_USER_EMAIL}"`);
     run(`git checkout ${defaultBranch}`);
 
-    // 1) Tocar activity.log y commitear a la rama por defecto
+    // 1) Commit "ruido" a la rama por defecto
     fs.appendFileSync('activity.log', `${nowISO} ${randomChar}\n`);
     run('git add activity.log');
     try {
         run(`git commit -m "chore(noise): ${nowISO}"`);
         run(`git push origin ${defaultBranch}`);
     } catch {
-        console.log('Nada para commitear/pushear en la rama por defecto.');
+        console.log('Nada nuevo para commitear/pushear en la rama por defecto.');
     }
 
-    // 2) Crear y cerrar un Issue
+    // 2) Crear y cerrar un Issue (actividad visible en Issues)
     const issue = await call('POST', `/repos/${OWNER}/${REPO}/issues`, {
         title: `Noisy issue ${nowISO}`,
         body: 'Autogenerado y autocerrado para mantener actividad.'
     });
     await call('PATCH', `/repos/${OWNER}/${REPO}/issues/${issue.number}`, { state: 'closed' });
 
-    // Antes: obtenías SHA y hacías POST /git/refs
-    // --- Sustituir por esto:
-
-    // 3) Crear rama y PR -> merge
+    // 3) Crear rama con git (evita 403 de /git/refs con algunos PAT fine-grained)
     const branchName = `noise/${Date.now()}`;
+    run(`git checkout -b ${branchName}`);
+    run(`git push -u origin ${branchName}`);
 
-    // Crear la rama localmente y publicarla (usa tus credenciales de checkout)
-    try {
-        run(`git checkout -b ${branchName}`);
-        // Asegúrate de tocar algo para que la rama tenga al menos un commit propio si querés,
-        // pero como luego subimos un archivo por Contents API, alcanza con crear y pushear la rama vacía:
-        run(`git push -u origin ${branchName}`);
-    } catch (e) {
-        console.error('No se pudo crear/pushear la rama con git:', e?.message || e);
-        process.exit(1);
-    }
-
-    // Crear un archivo nuevo por Contents API (en la rama creada)
+    // 4) Añadir un archivo en la rama vía Contents API (otro commit visible en el PR)
     const filePath = `branches/${branchName}.txt`;
     const contentB64 = Buffer.from(`hello ${nowISO}\n`).toString('base64');
     await call('PUT', `/repos/${OWNER}/${REPO}/contents/${encodeURIComponent(filePath)}`, {
         message: `feat: add ${filePath}`,
         content: contentB64,
-        branch: branchName
+        branch: branchName,
+        committer: { name: GIT_USER_NAME, email: GIT_USER_EMAIL },
+        author: { name: GIT_USER_NAME, email: GIT_USER_EMAIL },
     });
 
-    // Crear PR
+    // 5) Crear PR
     const pr = await call('POST', `/repos/${OWNER}/${REPO}/pulls`, {
         title: `Merge ${branchName}`,
         head: branchName,
@@ -112,19 +103,36 @@ async function call(method, url, body) {
         body: 'PR automático para actividad.'
     });
 
-    // Merge PR
+    // 5.a) (Opcional) Solicitar reviewers visibles
+    if (REQUEST_REVIEWERS.length) {
+        try {
+            await call('POST', `/repos/${OWNER}/${REPO}/pulls/${pr.number}/requested_reviewers`, {
+                reviewers: REQUEST_REVIEWERS
+            });
+        } catch (e) {
+            console.log('No pude solicitar reviewers (ignorado):', e.message);
+        }
+    }
+
+    // 5.b) Dejar un "code review" automático (COMMENT o APPROVE)
+    await call('POST', `/repos/${OWNER}/${REPO}/pulls/${pr.number}/reviews`, {
+        body: `Auto-review: ${APPROVE_PR ? 'LGTM ✅' : 'Comentario 👀'}\n\nTimestamp: ${nowISO}`,
+        event: APPROVE_PR ? 'APPROVE' : 'COMMENT'
+    });
+
+    // 6) Merge del PR
     await call('PUT', `/repos/${OWNER}/${REPO}/pulls/${pr.number}/merge`, {
         merge_method: 'merge'
     });
 
-    // Borrar rama remota (best-effort)
+    // 7) Borrar rama remota (best-effort)
     try {
         await call('DELETE', `/repos/${OWNER}/${REPO}/git/refs/heads/${branchName}`);
     } catch {
         console.log('No se pudo borrar la rama (ignorado).');
     }
 
-    console.log('Ruido generado con éxito ✅');
+    console.log('Ruido + review + merge generados con éxito ✅');
 })().catch(err => {
     console.error(err);
     process.exit(1);

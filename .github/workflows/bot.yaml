@@ -2,7 +2,7 @@ name: Noise Bot
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 * * * *"   # cada hora (UTC)
   workflow_dispatch:
 
 permissions:
@@ -21,7 +21,7 @@ jobs:
       - name: Checkout con tu token (PAT)
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.ACTIONS_PAT }}
+          token: ${{ secrets.ACTIONS_PAT }}   # <- tu PAT fine-grained o classic
           fetch-depth: 0
 
       - name: Setup Node
@@ -29,11 +29,20 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Ejecutar bot de ruido con tu identidad
+      - name: Ejecutar bot (commit + issue + PR + review + merge)
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT }}
-          GIT_USER_NAME: "vargascarlitos"
-          GIT_USER_EMAIL: "carlos.vr56@gmail.com"
+          # Usa tu PAT también para las llamadas a la API
+          GITHUB_TOKEN:   ${{ secrets.ACTIONS_PAT }}
+
+          # Identidad (usa tu email verificado o el noreply)
+          GIT_USER_NAME:  "TuUsuario"
+          GIT_USER_EMAIL: "TuUsuario@users.noreply.github.com"
+
+          # (Opcional) pedir reviewers (usernames separados por coma)
+          # REQUEST_REVIEWERS: "TuUsuario,OtroReviewer"
+
+          # (Opcional) que el review sea APPROVE (si lo quitás, será comentario)
+          APPROVE_PR: "1"
         run: |
           node -v
           node scripts/noise.js
