@@ -50,11 +50,11 @@ jobs:
           SEED=$(echo -n "$DATE_PY" | cksum | awk '{print $1 % 1000}')
           BASE=${BASE_DAY_INTENSITY:-0.7}
           DAY_FACTOR=$(python - <<PY
-import random,sys
-seed=int(sys.argv[1]); base=float(sys.argv[2])
-random.seed(seed)
-print(round(base * (0.8 + random.random()*0.8), 3))
-PY
+            import random,sys
+            seed=int(sys.argv[1]); base=float(sys.argv[2])
+            random.seed(seed)
+            print(round(base * (0.8 + random.random()*0.8), 3))
+            PY
           $SEED $BASE)
 
           if [ "$DOW_PY" -ge 6 ]; then WD_FACTOR=${WEEKEND_FACTOR:-0.25}; else WD_FACTOR=1.0; fi
@@ -65,11 +65,11 @@ PY
           else HOUR_FACTOR=${NIGHT_DROP:-0.2}; fi
 
           PCT=$(python - <<PY
-import sys
-day=float(sys.argv[1]); wd=float(sys.argv[2]); hr=float(sys.argv[3])
-p=min(95, max(0, int(100*day*wd*hr)))
-print(p)
-PY
+            import sys
+            day=float(sys.argv[1]); wd=float(sys.argv[2]); hr=float(sys.argv[3])
+            p=min(95, max(0, int(100*day*wd*hr)))
+            print(p)
+            PY
           $DAY_FACTOR $WD_FACTOR $HOUR_FACTOR)
 
           DRAW=$((RANDOM % 100))
