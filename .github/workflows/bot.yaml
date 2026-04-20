@@ -2,7 +2,7 @@ name: Noise Bot
 
 on:
   schedule:
-    - cron: "0 * * * *"   # ejecuta cada hora exacta (UTC)
+    - cron: "0 14 * * 1-5"   # 10 AM Paraguay (UTC-4), Lun-Vie
   workflow_dispatch:
 
 permissions:
@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: noise-bot
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   run-noise:
@@ -29,51 +29,9 @@ jobs:
         with:
           node-version: "20"
 
-      # 🎲 Jitter y gate probabilístico
-      - name: Jitter y gate probabilístico
-        env:
-          BASE_DAY_INTENSITY: "0.7"   # nivel promedio diario
-          WEEKEND_FACTOR: "0.25"      # baja en sáb/dom
-          MORNING_BOOST: "1.2"        # boost 9–12 PY
-          AFTERNOON_BOOST: "1.1"      # boost 13–17 PY
-          EVENING_DROP: "0.6"         # baja 18–21 PY
-          NIGHT_DROP: "0.2"           # casi nada 22–08 PY
-        run: |
-          JITTER=$((RANDOM % 60))
-          echo "Esperando $JITTER min..."
-          sleep $((JITTER * 60))
-
-          DATE_PY=$(TZ=America/Asuncion date +%F)
-          HOUR_PY=$(TZ=America/Asuncion date +%H)
-          DOW_PY=$(TZ=America/Asuncion date +%u)
-
-          SEED=$(echo -n "$DATE_PY" | cksum | awk '{print $1 % 1000}')
-          BASE=${BASE_DAY_INTENSITY:-0.7}
-          DAY_FACTOR=$(python3 -c "import random, sys; seed=int(sys.argv[1]); base=float(sys.argv[2]); random.seed(seed); print(round(base * (0.8 + random.random()*0.8), 3))" $SEED $BASE)
-
-          if [ "$DOW_PY" -ge 6 ]; then WD_FACTOR=${WEEKEND_FACTOR:-0.25}; else WD_FACTOR=1.0; fi
-
-          if   [ "$HOUR_PY" -ge 9 ] && [ "$HOUR_PY" -le 12 ]; then HOUR_FACTOR=${MORNING_BOOST:-1.2}
-          elif [ "$HOUR_PY" -ge 13 ] && [ "$HOUR_PY" -le 17 ]; then HOUR_FACTOR=${AFTERNOON_BOOST:-1.1}
-          elif [ "$HOUR_PY" -ge 18 ] && [ "$HOUR_PY" -le 21 ]; then HOUR_FACTOR=${EVENING_DROP:-0.6}
-          else HOUR_FACTOR=${NIGHT_DROP:-0.2}; fi
-
-          PCT=$(python3 -c "import sys; day=float(sys.argv[1]); wd=float(sys.argv[2]); hr=float(sys.argv[3]); p=min(95, max(0, int(100*day*wd*hr))); print(p)" $DAY_FACTOR $WD_FACTOR $HOUR_FACTOR)
-
-          DRAW=$((RANDOM % 100))
-          echo "Prob=$PCT% Sorteo=$DRAW"
-          if [ "$DRAW" -ge "$PCT" ]; then
-            echo "Gate: omito ejecución."
-            exit 0
-          fi
-
-      - name: Ejecutar bot con aleatoriedad
+      - name: Ejecutar bot
         env:
           GITHUB_TOKEN:   ${{ secrets.ACTIONS_PAT }}
           GIT_USER_NAME:  "TuUsuario"
           GIT_USER_EMAIL: "TuUsuario@users.noreply.github.com"
-
-          DO_ISSUE_PROB: "60"   # 60% chances de crear/cerrar issue
-          DO_PR_PROB:    "50"   # 50% chances de crear PR+merge
-        run: |
-          node scripts/noise.js
+        run: node scripts/noise.js
