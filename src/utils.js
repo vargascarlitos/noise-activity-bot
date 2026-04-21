@@ -3,3 +3,8 @@
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Helper: 2026-04-21T14:38:53.176Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
