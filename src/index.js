@@ -8,3 +8,8 @@ function isEmpty(obj) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Refactored: 2026-04-22T14:37:33.694Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
