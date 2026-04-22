@@ -13,3 +13,8 @@ function clamp(n, min, max) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Updated: 2026-04-22T15:00:34.844Z
+function validate(input) {
+  return input != null && input !== '';
+}
