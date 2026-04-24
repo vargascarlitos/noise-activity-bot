@@ -8,3 +8,8 @@ function normalize(value) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Refactored: 2026-04-24T14:52:04.372Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
