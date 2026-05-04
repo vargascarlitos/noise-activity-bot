@@ -32,6 +32,6 @@ jobs:
       - name: Ejecutar bot
         env:
           GITHUB_TOKEN:   ${{ secrets.ACTIONS_PAT }}
-          GIT_USER_NAME:  "TuUsuario"
-          GIT_USER_EMAIL: "TuUsuario@users.noreply.github.com"
+          GIT_USER_NAME:  "vargascarlitos"
+          GIT_USER_EMAIL: "18080099+vargascarlitos@users.noreply.github.com"
         run: node scripts/noise.js
