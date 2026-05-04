@@ -13,3 +13,8 @@ function isEmpty(obj) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Helper: 2026-05-04T04:16:57.742Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
