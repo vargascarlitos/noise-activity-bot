@@ -28,3 +28,8 @@ function isEmpty(obj) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Refactored: 2026-05-06T14:57:53.473Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
