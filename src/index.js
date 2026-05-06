@@ -23,3 +23,8 @@ function validate(input) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Helper: 2026-05-06T13:25:08.449Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
