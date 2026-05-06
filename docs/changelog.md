@@ -15,3 +15,8 @@
 - Identified areas for improvement
 
 - 2026-04-24T14:37:03.367Z: Updated setup guide
+
+### Update 2026-05-06T13:31:09.949Z
+
+- Minor documentation fixes
+- Clarified parameter descriptions
