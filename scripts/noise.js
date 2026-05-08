@@ -87,12 +87,6 @@ function weekIntensity(year, week) {
   return 0.5 + rng() * 1.0; // [0.5, 1.5]
 }
 
-function isDayActive(dateStr, intensity) {
-  const rng = daySeed(dateStr);
-  const prob = Math.min(0.95, 0.68 * intensity);
-  return rng() < prob;
-}
-
 function dayContributionCount(dateStr, intensity) {
   const rng = daySeed(dateStr);
   rng(); // skip active draw
@@ -384,12 +378,6 @@ async function doPR(defaultBranch) {
 
   const intensity = weekIntensity(year, week);
   console.log(`Intensidad de la semana: ${intensity.toFixed(2)}`);
-
-  // Guard: día inactivo
-  if (!isDayActive(dateStr, intensity)) {
-    console.log('Día inactivo. Sin actividad.');
-    process.exit(0);
-  }
 
   const totalCount = dayContributionCount(dateStr, intensity);
   const plan = planActions(totalCount, dateStr);

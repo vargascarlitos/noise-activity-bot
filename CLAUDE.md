@@ -13,12 +13,11 @@ GitHub "noise activity" bot that simulates realistic human-like repository activ
 - **`scripts/noise.js`** — Core bot logic (Node.js, no dependencies). Decision pipeline:
   1. **Weekend guard**: hard exit on Sat/Sun (safety check, cron already restricts)
   2. **Vacation week**: ~14% of weeks are skipped entirely (deterministic per week via seeded PRNG)
-  3. **Day active check**: ~68% of weekdays produce activity (adjusted by week intensity)
-  4. **Contribution count**: Poisson distribution (λ=3.5 × week intensity), clamped to [1, 8]
-  5. **Action planning**: distributes count into commits (always), issues (25% chance, max 1), PRs (15% chance, max 1)
-  6. **Execution with delays**: 5-30 min random sleep between each action
+  3. **Contribution count**: Poisson distribution (λ=3.5 × week intensity), clamped to [1, 8] — every non-vacation weekday produces at least 1 contribution
+  4. **Action planning**: distributes count into commits (always), issues (25% chance, max 1), PRs (15% chance, max 1)
+  5. **Execution with delays**: 5-30 min random sleep between each action
 
-  Key design: uses a deterministic PRNG (Mulberry32) seeded by date/week so re-runs on the same day produce consistent skip/active decisions. `Math.random()` is used only for non-critical choices (commit messages, delays).
+  Key design: uses a deterministic PRNG (Mulberry32) seeded by date/week so re-runs on the same day produce consistent decisions. `Math.random()` is used only for non-critical choices (commit messages, delays).
 
 ## Key Environment Variables
 
@@ -42,8 +41,7 @@ No build step, no dependencies beyond Node.js stdlib (`child_process`, `fs`, `pa
 
 ## Expected Output
 
-- ~500 contributions/year (vs ~13,000 with old bot)
-- ~32% of weekdays with zero contributions
-- ~7 vacation weeks/year
-- 1-8 contributions on active days (mean ~3.5)
+- ~700 contributions/year
+- Every non-vacation weekday produces 1-8 contributions (mean ~3.5)
+- ~7 vacation weeks/year (entire week skipped)
 - No weekend activity
