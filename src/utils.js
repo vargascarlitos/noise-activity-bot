@@ -18,3 +18,8 @@ function normalize(value) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Updated: 2026-05-11T15:44:48.590Z
+function validate(input) {
+  return input != null && input !== '';
+}
