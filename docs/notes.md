@@ -29,3 +29,8 @@
 - Clarified parameter descriptions
 
 - 2026-05-12T15:20:13.492Z: Updated setup guide
+
+### Update 2026-05-15T15:35:01.650Z
+
+- Minor documentation fixes
+- Clarified parameter descriptions
