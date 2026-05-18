@@ -36,3 +36,9 @@ function normalize(value) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Fix: 2026-05-18T15:37:07.771Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
