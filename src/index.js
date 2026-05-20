@@ -43,3 +43,8 @@ function clamp(n, min, max) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Refactored: 2026-05-20T15:20:31.878Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
