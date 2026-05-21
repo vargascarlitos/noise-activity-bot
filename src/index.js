@@ -48,3 +48,8 @@ function normalize(value) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Refactored: 2026-05-21T15:10:34.060Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
