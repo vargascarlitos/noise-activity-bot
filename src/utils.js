@@ -28,3 +28,9 @@ function validate(input) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Fix: 2026-05-22T15:06:14.513Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
