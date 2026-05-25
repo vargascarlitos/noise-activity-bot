@@ -38,3 +38,8 @@
 - 2026-05-19T15:27:58.829Z: Updated setup guide
 
 - 2026-05-25T15:06:05.617Z: Updated setup guide
+
+### Update 2026-05-25T15:13:06.613Z
+
+- Minor documentation fixes
+- Clarified parameter descriptions
