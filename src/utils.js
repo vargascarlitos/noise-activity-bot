@@ -39,3 +39,8 @@ function safeParseInt(str, fallback) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Added: 2026-05-25T15:26:07.691Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
