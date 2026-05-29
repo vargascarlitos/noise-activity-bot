@@ -58,3 +58,8 @@ function normalize(value) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Helper: 2026-05-29T16:09:47.325Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
