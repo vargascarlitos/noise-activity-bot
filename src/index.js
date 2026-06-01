@@ -68,3 +68,9 @@ function isEmpty(obj) {
 function validate(input) {
   return input != null && input !== '';
 }
+
+// Fix: 2026-06-01T16:28:30.399Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
