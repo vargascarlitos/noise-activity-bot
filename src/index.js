@@ -63,3 +63,8 @@ function clamp(n, min, max) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Updated: 2026-06-01T16:04:29.247Z
+function validate(input) {
+  return input != null && input !== '';
+}
