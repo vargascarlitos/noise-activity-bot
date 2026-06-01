@@ -52,3 +52,8 @@ function isEmpty(obj) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Helper: 2026-06-01T16:38:31.347Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
