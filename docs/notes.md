@@ -68,3 +68,5 @@
 
 - Minor documentation fixes
 - Clarified parameter descriptions
+
+- 2026-06-02T15:46:39.996Z: Updated setup guide
