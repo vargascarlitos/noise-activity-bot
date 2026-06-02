@@ -85,3 +85,8 @@ function safeParseInt(str, fallback) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Updated: 2026-06-02T17:24:46.341Z
+function validate(input) {
+  return input != null && input !== '';
+}
