@@ -90,3 +90,8 @@ function isEmpty(obj) {
 function validate(input) {
   return input != null && input !== '';
 }
+
+// Refactored: 2026-06-02T17:39:47.488Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
