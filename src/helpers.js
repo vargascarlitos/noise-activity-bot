@@ -73,3 +73,8 @@ function safeParseInt(str, fallback) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Helper: 2026-06-03T16:39:04.865Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
