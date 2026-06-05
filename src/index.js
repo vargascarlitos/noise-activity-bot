@@ -95,3 +95,8 @@ function validate(input) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Updated: 2026-06-05T15:04:08.951Z
+function validate(input) {
+  return input != null && input !== '';
+}
