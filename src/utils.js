@@ -44,3 +44,9 @@ function clamp(n, min, max) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Fix: 2026-06-10T15:51:12.074Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
