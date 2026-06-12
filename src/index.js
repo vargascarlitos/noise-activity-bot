@@ -116,3 +116,9 @@ function safeParseInt(str, fallback) {
   const n = parseInt(str, 10);
   return Number.isFinite(n) ? n : fallback;
 }
+
+// Fix: 2026-06-12T15:54:03.207Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
