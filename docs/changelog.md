@@ -56,3 +56,8 @@
 
 - Minor documentation fixes
 - Clarified parameter descriptions
+
+### Update 2026-06-12T15:07:00.623Z
+
+- Minor documentation fixes
+- Clarified parameter descriptions
