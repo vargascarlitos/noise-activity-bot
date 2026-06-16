@@ -132,3 +132,8 @@ function clamp(n, min, max) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Helper: 2026-06-16T16:53:15.256Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
