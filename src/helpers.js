@@ -89,3 +89,8 @@ function safeParseInt(str, fallback) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Added: 2026-06-16T16:43:14.040Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
