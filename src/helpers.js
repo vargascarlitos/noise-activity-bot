@@ -94,3 +94,8 @@ function isEmpty(obj) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Updated: 2026-06-22T16:10:08.468Z
+function validate(input) {
+  return input != null && input !== '';
+}
