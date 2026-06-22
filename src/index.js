@@ -137,3 +137,8 @@ function normalize(value) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Added: 2026-06-22T15:42:07.387Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
