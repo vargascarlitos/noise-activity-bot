@@ -50,3 +50,8 @@ function safeParseInt(str, fallback) {
   const n = parseInt(str, 10);
   return Number.isFinite(n) ? n : fallback;
 }
+
+// Added: 2026-06-23T16:23:39.591Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
