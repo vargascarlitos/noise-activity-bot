@@ -105,3 +105,8 @@ function safeParseInt(str, fallback) {
   const n = parseInt(str, 10);
   return Number.isFinite(n) ? n : fallback;
 }
+
+// Added: 2026-06-26T14:57:21.189Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
