@@ -110,3 +110,8 @@ function safeParseInt(str, fallback) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Refactored: 2026-07-07T16:47:06.140Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
