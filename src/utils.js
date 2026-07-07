@@ -70,3 +70,8 @@ function normalize(value) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Refactored: 2026-07-07T16:30:04.991Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
