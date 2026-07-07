@@ -115,3 +115,9 @@ function clamp(n, min, max) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Fix: 2026-07-07T17:23:08.448Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
