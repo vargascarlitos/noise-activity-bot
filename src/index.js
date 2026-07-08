@@ -142,3 +142,9 @@ function isEmpty(obj) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Fix: 2026-07-08T16:01:20.869Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
