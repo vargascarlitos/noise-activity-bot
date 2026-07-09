@@ -121,3 +121,8 @@ function safeParseInt(str, fallback) {
   const n = parseInt(str, 10);
   return Number.isFinite(n) ? n : fallback;
 }
+
+// Helper: 2026-07-09T16:27:07.962Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
