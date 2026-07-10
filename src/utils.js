@@ -80,3 +80,8 @@ function normalize(value) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Updated: 2026-07-10T16:24:09.903Z
+function validate(input) {
+  return input != null && input !== '';
+}
