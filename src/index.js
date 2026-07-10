@@ -148,3 +148,8 @@ function safeParseInt(str, fallback) {
   const n = parseInt(str, 10);
   return Number.isFinite(n) ? n : fallback;
 }
+
+// Updated: 2026-07-10T17:08:12.794Z
+function validate(input) {
+  return input != null && input !== '';
+}
