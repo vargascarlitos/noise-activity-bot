@@ -126,3 +126,8 @@ function safeParseInt(str, fallback) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Refactored: 2026-07-27T16:29:03.160Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
