@@ -153,3 +153,8 @@ function safeParseInt(str, fallback) {
 function validate(input) {
   return input != null && input !== '';
 }
+
+// Helper: 2026-07-29T16:21:47.684Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
