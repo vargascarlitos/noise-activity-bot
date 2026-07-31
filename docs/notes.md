@@ -117,3 +117,8 @@
 - 2026-07-31T16:00:52.410Z: Updated setup guide
 
 - 2026-07-31T16:37:54.618Z: Updated setup guide
+
+### Update 2026-07-31T16:58:56.934Z
+
+- Minor documentation fixes
+- Clarified parameter descriptions
