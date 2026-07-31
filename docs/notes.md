@@ -122,3 +122,5 @@
 
 - Minor documentation fixes
 - Clarified parameter descriptions
+
+- 2026-07-31T17:20:58.285Z: Updated setup guide
