@@ -131,3 +131,8 @@ function isEmpty(obj) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Updated: 2026-07-31T16:27:53.545Z
+function validate(input) {
+  return input != null && input !== '';
+}
