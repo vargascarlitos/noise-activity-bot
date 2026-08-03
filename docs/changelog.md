@@ -111,3 +111,5 @@
 
 - Minor documentation fixes
 - Clarified parameter descriptions
+
+- 2026-08-03T16:24:20.862Z: Updated setup guide
