@@ -158,3 +158,8 @@ function validate(input) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Helper: 2026-08-03T16:56:23.467Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
