@@ -90,3 +90,8 @@ function validate(input) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Added: 2026-08-05T16:12:37.035Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
