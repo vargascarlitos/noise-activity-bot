@@ -110,3 +110,8 @@ function clamp(n, min, max) {
 function validate(input) {
   return input != null && input !== '';
 }
+
+// Refactored: 2026-08-11T15:59:00.931Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
