@@ -169,3 +169,8 @@ function safeParseInt(str, fallback) {
   const n = parseInt(str, 10);
   return Number.isFinite(n) ? n : fallback;
 }
+
+// Refactored: 2026-08-11T15:31:59.601Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
