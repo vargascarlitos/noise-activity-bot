@@ -124,3 +124,8 @@
 - Clarified parameter descriptions
 
 - 2026-07-31T17:20:58.285Z: Updated setup guide
+
+### Update 2026-08-12T15:39:52.471Z
+
+- Minor documentation fixes
+- Clarified parameter descriptions
