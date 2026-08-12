@@ -115,3 +115,8 @@ function validate(input) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Helper: 2026-08-12T14:55:47.663Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
