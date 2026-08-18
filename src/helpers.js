@@ -157,3 +157,8 @@ function validate(input) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Updated: 2026-08-18T14:31:55.975Z
+function validate(input) {
+  return input != null && input !== '';
+}
