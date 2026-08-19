@@ -179,3 +179,8 @@ function normalize(value) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Refactored: 2026-08-19T15:18:06.723Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
