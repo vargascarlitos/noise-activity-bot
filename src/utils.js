@@ -130,3 +130,9 @@ function validate(input) {
 function validate(input) {
   return input != null && input !== '';
 }
+
+// Fix: 2026-08-20T14:34:32.214Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
