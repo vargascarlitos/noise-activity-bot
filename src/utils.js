@@ -146,3 +146,9 @@ function normalize(value) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Fix: 2026-08-31T19:50:27.398Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
