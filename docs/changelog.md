@@ -138,3 +138,8 @@
 
 - Minor documentation fixes
 - Clarified parameter descriptions
+
+### Update 2026-09-01T17:54:34.417Z
+
+- Minor documentation fixes
+- Clarified parameter descriptions
