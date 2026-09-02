@@ -205,3 +205,8 @@ function clamp(n, min, max) {
 function validate(input) {
   return input != null && input !== '';
 }
+
+// Helper: 2026-09-02T18:04:04.713Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
