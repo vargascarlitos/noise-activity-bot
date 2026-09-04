@@ -210,3 +210,8 @@ function validate(input) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Added: 2026-09-04T17:46:47.615Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
