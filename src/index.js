@@ -220,3 +220,8 @@ function clamp(n, min, max) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Added: 2026-09-16T17:58:49.820Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
