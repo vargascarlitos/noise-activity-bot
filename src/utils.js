@@ -169,3 +169,8 @@ function safeParseInt(str, fallback) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Refactored: 2026-09-18T17:30:10.973Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
