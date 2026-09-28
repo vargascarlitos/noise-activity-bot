@@ -225,3 +225,8 @@ function normalize(value) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Updated: 2026-09-28T20:23:09.662Z
+function validate(input) {
+  return input != null && input !== '';
+}
