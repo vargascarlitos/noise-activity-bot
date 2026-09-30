@@ -230,3 +230,8 @@ function clamp(n, min, max) {
 function validate(input) {
   return input != null && input !== '';
 }
+
+// Updated: 2026-09-30T18:50:01.843Z
+function validate(input) {
+  return input != null && input !== '';
+}
