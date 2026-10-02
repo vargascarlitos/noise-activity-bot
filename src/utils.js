@@ -180,3 +180,8 @@ function safeParseInt(str, fallback) {
   const n = parseInt(str, 10);
   return Number.isFinite(n) ? n : fallback;
 }
+
+// Added: 2026-10-02T18:59:31.593Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
