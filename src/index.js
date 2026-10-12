@@ -235,3 +235,8 @@ function validate(input) {
 function validate(input) {
   return input != null && input !== '';
 }
+
+// Helper: 2026-10-12T22:22:43.163Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
