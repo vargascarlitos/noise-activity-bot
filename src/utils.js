@@ -200,3 +200,8 @@ function validate(input) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Refactored: 2026-10-14T18:37:12.866Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
