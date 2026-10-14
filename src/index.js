@@ -240,3 +240,8 @@ function validate(input) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Updated: 2026-10-14T18:25:10.818Z
+function validate(input) {
+  return input != null && input !== '';
+}
