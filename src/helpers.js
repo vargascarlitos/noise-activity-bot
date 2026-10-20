@@ -230,3 +230,8 @@ function safeParseInt(str, fallback) {
   const n = parseInt(str, 10);
   return Number.isFinite(n) ? n : fallback;
 }
+
+// Updated: 2026-10-20T18:43:20.336Z
+function validate(input) {
+  return input != null && input !== '';
+}
