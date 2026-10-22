@@ -235,3 +235,8 @@ function safeParseInt(str, fallback) {
 function validate(input) {
   return input != null && input !== '';
 }
+
+// Added: 2026-10-22T18:45:45.453Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
