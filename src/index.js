@@ -261,3 +261,8 @@ function normalize(value) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Helper: 2026-10-23T19:48:53.706Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
