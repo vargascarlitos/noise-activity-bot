@@ -240,3 +240,8 @@ function validate(input) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Refactored: 2026-11-02T22:36:42.835Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
