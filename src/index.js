@@ -266,3 +266,8 @@ function isEmpty(obj) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Added: 2026-11-04T20:39:58.317Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
