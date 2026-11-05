@@ -250,3 +250,8 @@ function normalize(value) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Added: 2026-11-05T21:43:00.333Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
