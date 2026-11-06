@@ -281,3 +281,8 @@ function normalize(value) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Refactored: 2026-11-06T20:55:29.649Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
