@@ -255,3 +255,8 @@ function clamp(n, min, max) {
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
+
+// Helper: 2026-11-11T21:45:16.343Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
