@@ -260,3 +260,8 @@ function clamp(n, min, max) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Refactored: 2026-11-12T21:18:30.535Z
+function normalize(value) {
+  return String(value).trim().toLowerCase();
+}
