@@ -265,3 +265,8 @@ function isEmpty(obj) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Added: 2026-11-12T21:34:32.027Z
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
