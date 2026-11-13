@@ -251,3 +251,9 @@ function isEmpty(obj) {
 function normalize(value) {
   return String(value).trim().toLowerCase();
 }
+
+// Fix: 2026-11-13T22:13:51.560Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
