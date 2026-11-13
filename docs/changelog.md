@@ -213,3 +213,5 @@
 
 - Minor documentation fixes
 - Clarified parameter descriptions
+
+- 2026-11-13T21:44:48.811Z: Updated setup guide
