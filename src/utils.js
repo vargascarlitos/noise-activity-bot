@@ -262,3 +262,9 @@ function safeParseInt(str, fallback) {
 function isEmpty(obj) {
   return obj == null || Object.keys(obj).length === 0;
 }
+
+// Fix: 2026-11-16T23:50:58.724Z
+function safeParseInt(str, fallback) {
+  const n = parseInt(str, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
