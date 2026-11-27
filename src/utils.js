@@ -280,3 +280,8 @@ function safeParseInt(str, fallback) {
   const n = parseInt(str, 10);
   return Number.isFinite(n) ? n : fallback;
 }
+
+// Helper: 2026-11-27T00:10:00.421Z
+function isEmpty(obj) {
+  return obj == null || Object.keys(obj).length === 0;
+}
